@@ -12,18 +12,27 @@ const events = [
 
 export function RunningBanner() {
   const [currentEventIndex, setCurrentEventIndex] = useState(0)
+  const [isFlashing, setIsFlashing] = useState(false)
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const eventTimer = setInterval(() => {
       setCurrentEventIndex((prevIndex) => (prevIndex + 1) % events.length)
+      setIsFlashing(true)
+      setTimeout(() => setIsFlashing(false), 500) // Flash for 500ms
     }, 5000) // Change event every 5 seconds
 
-    return () => clearInterval(timer)
+    return () => clearInterval(eventTimer)
   }, [])
 
   return (
     <Card className="w-full bg-[#f9d3c5] p-2 overflow-hidden">
-      <div className="flex whitespace-nowrap animate-marquee">
+      <div 
+        className={`whitespace-nowrap animate-marquee ${isFlashing ? 'animate-flash' : ''}`}
+        style={{
+          animation: 'marquee 20s linear infinite',
+          display: 'inline-block',
+        }}
+      >
         {events.map((event, index) => (
           <span
             key={index}
