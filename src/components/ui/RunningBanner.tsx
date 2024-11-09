@@ -4,11 +4,15 @@ import React, { useEffect, useState } from 'react'
 import { Card } from "@/components/ui/card"
 
 const events = [
-  "Food Drive: Saturday at Central Park",
-  "Free Health Clinic: Every Tuesday",
-  "Job Fair: Next Wednesday at Community Center",
-  "Clothing Donation: Ongoing at City Hall"
-]
+  "Mary's Place No Child Sleeps Outside: November 16, 2024",
+  "Free Health Clinic: Every Tuesday at Seattle Union Gospel Mission",
+  "Operation Nightwatch Sock Drive: November 24, 2024 at 12:30 PM",
+  "Monthly Food and Supplies Drive: Every Saturday at Pike Place Market",
+  "Job Fair: Next Wednesday at Seattle Community Center",
+  "Clothing Donation: Ongoing at City Hall",
+  "Path with Art Exhibition: October 17 - November 17, 2024",
+  "Seattle Homeless Outreach Event: December 14, 2024"
+];
 
 export function RunningBanner() {
   const [currentEventIndex, setCurrentEventIndex] = useState(0)
