@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table"
 import Image from 'next/image'
 import ResourceCard from './ResourceCard'
-
+import { RunningBanner } from './RunningBanner'
 const resources = [
   {
     title: 'Shelter',
@@ -117,7 +117,7 @@ export default function MainComponent() {
 
   return (
     <>
-
+<RunningBanner />
       <div className="bg-primary flex flex-col p-2 md:p-4 md:flex-row justify-center items-center gap-8 md:gap-16 text-white rounded-xl">
 
         <div className='flex text-primary mt-4'>
