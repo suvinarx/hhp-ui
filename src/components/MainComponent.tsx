@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table"
 import Image from 'next/image'
 import ResourceCard from './ResourceCard'
-import { RunningBanner } from './RunningBanner'
+import { RunningBanner } from './ui/RunningBanner'
 const resources = [
   {
     title: 'Shelter',
