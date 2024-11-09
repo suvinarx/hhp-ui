@@ -20,7 +20,7 @@ export default function About() {
   const founder = {
     name: "Suhani Sahai",
     title: "Founder & Executive Director",
-    bio: "Suhani Sahai has been a passionate advocate for homeless rights for over 15 years. With a background in social work and community organizing, Suhani founded HelpingHeartNetwork to create a centralized platform for resources and support. Her dedication and innovative approach have helped thousands of individuals find housing and stability.",
+    bio: "Suhani Sahai has been a passionate advocate for homeless rights for over 4 years. With a background in social work and community organizing, Suhani founded HelpingHeartNetwork to create a centralized platform for resources and support. Her dedication and innovative approach have helped thousands of individuals find housing and stability.",
     imageUrl: "/assets/suhani.jpg"
   }
 
