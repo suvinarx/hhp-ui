@@ -24,27 +24,42 @@ const Contact = () => {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Display the request payload in an alert
+    alert('Submitting request with payload: ' + JSON.stringify(formData));
+
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        });
+
+        // Display the raw response object in an alert
+        alert('Response received: ' + JSON.stringify(response));
+
+        if (response.ok) {
+            const responseData = await response.json();
+            // Display the response data in an alert
+            alert('Response data: ' + JSON.stringify(responseData));
+
+            toast({
+                variant: 'success',
+                title: "Message Sent Successfully",
             });
-            if (response.ok) {
-                toast({
-                    variant: 'success',
-                    title: "Message Sent Successfully",
-                })
-                setFormData({ name: '', email: '', message: '' });
-            } else {
-                throw new Error('Failed to submit form');
-            }
-        } catch (error) {
-            alert('Error submitting form: ' + (error as Error).message);
+            setFormData({ name: '', email: '', message: '' });
+        } else {
+            const errorData = await response.json();
+            alert('Failed to submit form: ' + JSON.stringify(errorData));
+            throw new Error(errorData?.error || 'Failed to submit form');
         }
-    };
+    } catch (error) {
+        alert('Error submitting form: ' + (error as Error).message);
+    }
+};
+
 
     return (
         <div id='contact' className="bg-primary grid grid-cols-1 md:grid-cols-2 justify-center items-center text-white rounded-xl">
