@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Card } from "@/components/ui/card"
 
 const events = [
+  "Upcoming Events:",
   "Mary's Place No Child Sleeps Outside: November 16, 2024",
   "Free Health Clinic: Every Tuesday at Seattle Union Gospel Mission",
   "Operation Nightwatch Sock Drive: November 24, 2024 at 12:30 PM",
@@ -40,7 +41,7 @@ export function RunningBanner() {
       <div 
         className={`whitespace-nowrap ${isFlashing ? 'animate-flash' : ''}`}
         style={{
-          animation: isPaused ? 'none' : 'marquee 20s linear infinite',
+          animation: isPaused ? 'none' : 'marquee 40s linear infinite', // Slowed down to 40s
           display: 'inline-block',
         }}
       >
@@ -49,6 +50,8 @@ export function RunningBanner() {
             key={index}
             className={`inline-block px-4 font-semibold ${index === currentEventIndex ? 'text-blue-600' : ''}`}
             aria-live={index === currentEventIndex ? "polite" : "off"}
+            onMouseEnter={() => setIsPaused(true)} // Pause when hovering over each event
+            onMouseLeave={() => setIsPaused(false)} // Resume when leaving each event
           >
             {event}
           </span>
