@@ -17,8 +17,11 @@ const events = [
 export function RunningBanner() {
   const [currentEventIndex, setCurrentEventIndex] = useState(0)
   const [isFlashing, setIsFlashing] = useState(false)
+  const [isPaused, setIsPaused] = useState(false) // Track if paused on hover
 
   useEffect(() => {
+    if (isPaused) return; // Skip interval if paused
+
     const eventTimer = setInterval(() => {
       setCurrentEventIndex((prevIndex) => (prevIndex + 1) % events.length)
       setIsFlashing(true)
@@ -26,21 +29,25 @@ export function RunningBanner() {
     }, 5000) // Change event every 5 seconds
 
     return () => clearInterval(eventTimer)
-  }, [])
+  }, [isPaused]) // Re-run effect if `isPaused` changes
 
   return (
-    <Card className="w-full bg-[#f9d3c5] p-2 overflow-hidden">
+    <Card
+      className="w-full bg-[#f9d3c5] p-2 overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div 
-        className={`whitespace-nowrap animate-marquee ${isFlashing ? 'animate-flash' : ''}`}
+        className={`whitespace-nowrap ${isFlashing ? 'animate-flash' : ''}`}
         style={{
-          animation: 'marquee 20s linear infinite',
+          animation: isPaused ? 'none' : 'marquee 20s linear infinite',
           display: 'inline-block',
         }}
       >
         {events.map((event, index) => (
           <span
             key={index}
-            className="inline-block px-4 font-semibold"
+            className={`inline-block px-4 font-semibold ${index === currentEventIndex ? 'text-blue-600' : ''}`}
             aria-live={index === currentEventIndex ? "polite" : "off"}
           >
             {event}
