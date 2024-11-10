@@ -1,20 +1,35 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import { Contact } from '@/models/schemas';
 
-export async function POST(req: Request) {
-  try {
-    await dbConnect();
-    const body = await req.json();
-    const contact = new Contact(body);
-    await contact.save();
+export async function POST(request: Request) {
+    try {
+        const { name, email, message } = await request.json();
 
-    return NextResponse.json({ message: 'Contact form submitted successfully' }, { status: 201 });
-  } catch (error) {
-    return NextResponse.json({ message: 'Error submitting contact form', error: (error as Error).message }, { status: 400 });
-  }
-}
+        // Input validation
+        if (!name || !email || !message) {
+            return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
+        }
 
-export async function OPTIONS() {
-  return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });
+        // Send data to Formsubmit.co
+        const formsubmitResponse = await fetch(`https://formsubmit.co/${process.env.FORMSUBMIT_EMAIL}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                message,
+            }),
+        });
+
+        if (formsubmitResponse.ok) {
+            return NextResponse.json({ message: 'Message sent successfully' }, { status: 200 });
+        } else {
+            const errorData = await formsubmitResponse.json();
+            return NextResponse.json({ error: errorData.error || 'Failed to send message' }, { status: 500 });
+        }
+    } catch (error) {
+        console.error('Error in form submission:', error);
+        return NextResponse.json({ error: 'Failed to process form submission' }, { status: 500 });
+    }
 }
