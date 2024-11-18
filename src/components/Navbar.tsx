@@ -13,7 +13,7 @@ import {
     SheetContent,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import Feedback from './Feedback';
+
 
 const Navbar = () => {
 
@@ -29,7 +29,7 @@ const Navbar = () => {
                     <li><Button variant="link" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</Button></li>
                     <li><Button variant="link" onClick={() => window.scrollTo({ top: document.getElementById('about')?.offsetTop, behavior: 'smooth' })}>About</Button></li>
                     <li><Button variant="link" onClick={() => window.scrollTo({ top: document.getElementById('contact')?.offsetTop, behavior: 'smooth' })}>Contact</Button></li>
-                    <li><Button variant="default" onClick={() => setDialogVisible(true)}>Feedback</Button></li>
+                    
                 </ul>
                 <div className='flex md:hidden'>
                     <Sheet>
@@ -39,21 +39,14 @@ const Navbar = () => {
                                 <li><SheetTrigger asChild><Button variant="link" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</Button></SheetTrigger></li>
                                 <li><SheetTrigger asChild><Button variant="link" onClick={() => window.scrollTo({ top: document.getElementById('about')?.offsetTop, behavior: 'smooth' })}>About</Button></SheetTrigger></li>
                                 <li><SheetTrigger asChild><Button variant="link" onClick={() => window.scrollTo({ top: document.getElementById('contact')?.offsetTop, behavior: 'smooth' })}>Contact</Button></SheetTrigger></li>
-                                <li><SheetTrigger asChild><Button variant="default" onClick={() => setDialogVisible(true)}>Feedback</Button></SheetTrigger></li>
+                                
                             </ul>
                         </SheetContent>
                     </Sheet>
                 </div>
             </nav>
 
-            <Dialog open={dialogVisible} onOpenChange={setDialogVisible}>
-                <DialogContent className='md:w-[512px]'>
-                    <DialogHeader>
-                        <h2 className="text-xl md:text-2xl font-bold mb-4">Submit Feedback</h2>
-                    </DialogHeader>
-                    <Feedback closeDialog={() => setDialogVisible(false)} />
-                </DialogContent>
-            </Dialog>
+            
 
 
         </>
