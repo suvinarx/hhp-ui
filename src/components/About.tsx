@@ -81,17 +81,7 @@ export default function About() {
           </CardContent>
         </Card>
 
-        {/* Website Link */}
-        <div className="text-center">
-          <a
-            href="https://www.helpingheartnetwork.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#FF9999] hover:text-[#FF7777] transition-colors"
-          >
-            www.helpingheartnetwork.org
-          </a>
-        </div>
+       
       </div>
     </div>
   )

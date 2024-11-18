@@ -27,8 +27,7 @@ const Contact = () => {
    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Display the request payload in an alert
-    alert('Submitting request with payload: ' + JSON.stringify(formData));
+    
 
     try {
         const response = await fetch('/api/contact', {
@@ -37,14 +36,11 @@ const Contact = () => {
             body: JSON.stringify(formData),
         });
 
-        // Display the raw response object in an alert
-        alert('Response received: ' + JSON.stringify(response));
+        
 
         if (response.ok) {
             const responseData = await response.json();
-            // Display the response data in an alert
-            alert('Response data: ' + JSON.stringify(responseData));
-
+                        
             toast({
                 variant: 'success',
                 title: "Message Sent Successfully",

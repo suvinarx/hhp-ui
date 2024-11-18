@@ -1,35 +1,44 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
     try {
-        const { name, email, message } = await request.json();
-
-        // Input validation
-        if (!name || !email || !message) {
-            return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
-        }
-
-        // Send data to Formsubmit.co
-        const formsubmitResponse = await fetch(`https://formsubmit.co/${process.env.FORMSUBMIT_EMAIL}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        const body = await req.json();
+        
+        const { name, email, message } = body;
+        
+        const emailBody = `
+        You have received a new message from the contact form:\n
+        Name: ${name}\n
+        Email: ${email}\n
+        Message:\n
+        ${message}\n
+        --\n
+        This is an automated message. Please do not reply directly to this email.
+        `.trim();
+        
+        const response = await fetch("https://sendmail-api-docs.vercel.app/api/send", {
+            method: "POST",
             body: JSON.stringify({
-                name,
-                email,
-                message,
+                to: "suvinarinc@gmail.com", 
+                subject: "Message From Your E-commerce Website",
+                message: emailBody,
             }),
         });
 
-        if (formsubmitResponse.ok) {
-            return NextResponse.json({ message: 'Message sent successfully' }, { status: 200 });
+
+
+        const data = await response.json();
+
+        if (response.ok) {
+            return NextResponse.json({ success: true, data });
         } else {
-            const errorData = await formsubmitResponse.json();
-            return NextResponse.json({ error: errorData.error || 'Failed to send message' }, { status: 500 });
+            return NextResponse.json(
+                { success: false, error: data },
+                { status: response.status }
+            );
         }
     } catch (error) {
-        console.error('Error in form submission:', error);
-        return NextResponse.json({ error: 'Failed to process form submission' }, { status: 500 });
+        console.error('Error:', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
